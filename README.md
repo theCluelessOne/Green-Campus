@@ -43,7 +43,13 @@ Adarsh Raj M - frontend
 
 ## Screenshot
 
-![leaderboard](https://github.com/user-attachments/assets/2f8b20df-a55f-45b0-9bc5-af58966545a5)
+![signup](./assets/signup.jpg)
+![login](./assets/login.jpg)
+![main1](./assets/main1.jpg)
+![main2](./assets/main2.jpg)
+![profile](./assets/profile.jpg)
+![leaderboard](./assets/leaderboard.jpg)
+
 
 ##Possible Challenges
 
