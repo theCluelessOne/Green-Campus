@@ -37,8 +37,11 @@ https://github.com/theCluelessOne/Green-Campus
 
 ## Team Members & Roles
 Aadesh A Kumar -  Team Leader, backend
+
 Saurav B - Idea generation, frontend
+
 Akshay S - UI/UX design
+
 Adarsh Raj M - frontend
 
 ## Screenshot
