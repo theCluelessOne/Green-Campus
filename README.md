@@ -43,6 +43,7 @@ Adarsh Raj M - frontend
 
 ## Screenshot
 
+![leaderboard](https://github.com/user-attachments/assets/2f8b20df-a55f-45b0-9bc5-af58966545a5)
 
 ##Possible Challenges
 
