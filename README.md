@@ -51,7 +51,7 @@ Adarsh Raj M - frontend
 ![leaderboard](./assets/leaderboard.jpg)
 
 
-##Possible Challenges
+## Possible Challenges
 
 User Engagement: Motivating students to consistently participate in sustainability activities.
 
@@ -63,7 +63,7 @@ Scalability: Building a system that can grow and adapt for larger communities.
 
 Real-time Tracking: Implementing live leaderboards and progress updates.
 
-##Tech stack
+## Tech stack
 
 Backend: Django (Python)
 
@@ -73,7 +73,7 @@ Database: PostgreSQL (or SQLite for initial phases)
 
 Authentication: Django’s built-in user authentication
 
-##Future Plans
+## Future Plans
 
 Launch a fully functional web application with real-time leaderboards and digital badge distribution.
 
