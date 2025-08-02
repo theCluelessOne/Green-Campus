@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sign Up</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background:#10b981;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #fff;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      width: 380px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    input, select, textarea {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      width: 100%;
+    }
+    button {
+      padding: 12px;
+      font-size: 1.1rem;
+      color: #10b981;
+      background: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #f1f1f1;
+    }
+    a{
+        color: white;
+        text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Sign Up</h2>
+    <form action="#" method="post">
+      <input type="text" name="name" placeholder="Full Name" required>
+      <input type="tel" name="phone" placeholder="Phone Number" required>
+      <input type="text" name="pnr" placeholder="PNR" required>
+      <input type="email" name="email" placeholder="College Email" required>
+      <input type="password" name="password" placeholder=" Password" required>
+      <select name="department" required>
+        <option value="">-- Select Department --</option>
+        <option value="CSE">Computer Science</option>
+        <option value="IT">Information Technology</option>
+        <option value="ECE">Electronics</option>
+        <option value="EEE">Electrical</option>
+        <option value="ME">Mechanical</option>
+        <option value="CE">Civil</option>
+      </select>
+      <select name="semester" required>
+        <option value="">-- Select Semester --</option>
+        <option value="1">1st</option>
+        <option value="2">2nd</option>
+        <option value="3">3rd</option>
+        <option value="4">4th</option>
+        <option value="5">5th</option>
+        <option value="6">6th</option>
+        <option value="7">7th</option>
+        <option value="8">8th</option>
+      </select>
+      <textarea name="address" rows="3" placeholder="Enter your address" required></textarea>
+      <button type="submit">Sign Up</button>
+<p>Already have an account? <a href="login.html">Login</a></p>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Point Leaderboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --primary-light: #d1fae5;
+            --secondary: #fbbf24;
+            --light: #f9fafb;
+            --dark: #1f2937;
+            --gray: #6b7280;
+            --success: #34d399;
+            --gold: #ffd700;
+            --silver: #c0c0c0;
+            --bronze: #cd7f32;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e6fffa, #f0fdf4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 0 1rem;
+        }
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .logo-icon {
+            background: var(--primary);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .logo-icon i {
+            font-size: 28px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .leaderboard-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+
+        .leaderboard-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .leaderboard-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: white;
+            color: var(--primary-dark);
+        }
+
+        .leaderboard-content {
+            padding: 1.5rem;
+        }
+
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .leaderboard-table th {
+            text-align: left;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--primary-light);
+        }
+
+        .leaderboard-table td {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .rank-cell {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+
+        .top-1 .rank-cell {
+            color: var(--gold);
+        }
+
+        .top-2 .rank-cell {
+            color: var(--silver);
+        }
+
+        .top-3 .rank-cell {
+            color: var(--bronze);
+        }
+
+        .student-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .student-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a7f3d0, #6ee7b7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+
+        .student-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .student-name {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .student-meta {
+            font-size: 0.85rem;
+            color: var(--gray);
+            display: flex;
+            gap: 15px;
+        }
+
+        .points-cell {
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .podium {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .podium-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+        }
+
+        .podium-rank {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: -35px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .podium-1 .podium-rank {
+            background: var(--gold);
+            color: #8a6d00;
+        }
+
+        .podium-2 .podium-rank {
+            background: var(--silver);
+            color: #555;
+        }
+
+        .podium-3 .podium-rank {
+            background: var(--bronze);
+            color: #6a3805;
+        }
+
+        .podium-stand {
+            width: 100%;
+            padding-top: 70px;
+            background: linear-gradient(to bottom, var(--primary-light), white);
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 70px 1rem 1.5rem;
+        }
+
+        .podium-1 .podium-stand {
+            height: 250px;
+        }
+
+        .podium-2 .podium-stand {
+            height: 200px;
+        }
+
+        .podium-3 .podium-stand {
+            height: 150px;
+        }
+
+        .podium-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .podium-details {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        .podium-points {
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--gray);
+            padding: 1rem;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .leaderboard-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .leaderboard-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            .filters {
+                justify-content: center;
+            }
+            
+            .leaderboard-table th:nth-child(4),
+            .leaderboard-table td:nth-child(4) {
+                display: none;
+            }
+            
+            .student-meta {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .leaderboard-table th:nth-child(3),
+            .leaderboard-table td:nth-child(3) {
+                display: none;
+            }
+            
+            .podium {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .podium-item {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .leaderboard-container {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .podium-item {
+            animation: fadeIn 0.8s ease-out;
+            animation-fill-mode: backwards;
+        }
+        
+        .podium-1 { animation-delay: 0.2s; }
+        .podium-2 { animation-delay: 0.4s; }
+        .podium-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-seedling"></i>
+                </div>
+                <h1>Green Point Leaderboard</h1>
+                <p class="subtitle">See how students rank in our sustainability engagement program</p>
+            </div>
+        </header>
+        
+        <div class="leaderboard-container">
+            <div class="leaderboard-header">
+                <div class="leaderboard-title">
+                    <i class="fas fa-trophy"></i>
+                    <span>Top Sustainability Champions</span>
+                </div>
+                <div class="filters">
+                    <button class="filter-btn active">All Departments</button>
+                    <button class="filter-btn">Environmental Science</button>
+                    <button class="filter-btn">Engineering</button>
+                    <button class="filter-btn">Business</button>
+                </div>
+            </div>
+            
+            <div class="leaderboard-content">
+                <!-- Podium for top 3 -->
+                <div class="podium">
+                    <div class="podium-item podium-2">
+                        <div class="podium-rank">2</div>
+                        <div class="podium-stand">
+                            <div class="student-avatar">MJ</div>
+                            <div class="podium-name">Maya Johnson</div>
+                            <div class="podium-details">
+                                <div>Environmental Science</div>
+                                <div>4th Semester</div>
+                            </div>
+                            <div class="podium-points">
+                                <i class="fas fa-leaf"></i> 2,150 Points
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="podium-item podium-1">
+                        <div class="podium-rank">1</div>
+                        <div class="podium-stand">
+                            <div class="student-avatar">AJ</div>
+                            <div class="podium-name">Alex Johnson</div>
+                            <div class="podium-details">
+                                <div>Environmental Science</div>
+                                <div>5th Semester</div>
+                            </div>
+                            <div class="podium-points">
+                                <i class="fas fa-leaf"></i> 2,450 Points
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="podium-item podium-3">
+                        <div class="podium-rank">3</div>
+                        <div class="podium-stand">
+                            <div class="student-avatar">RS</div>
+                            <div class="podium-name">Ryan Smith</div>
+                            <div class="podium-details">
+                                <div>Civil Engineering</div>
+                                <div>6th Semester</div>
+                            </div>
+                            <div class="podium-points">
+                                <i class="fas fa-leaf"></i> 1,980 Points
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Full Leaderboard Table -->
+                <table class="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th width="80">Rank</th>
+                            <th>Student</th>
+                            <th>Department</th>
+                            <th>Semester</th>
+                            <th width="150">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="top-1">
+                            <td class="rank-cell">1</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">AJ</div>
+                                    <div class="student-details">
+                                        <div class="student-name">Alex Johnson</div>
+                                        <div class="student-meta">
+                                            <span>alex.j@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Environmental Science</td>
+                            <td>5th Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 2,450</td>
+                        </tr>
+                        <tr class="top-2">
+                            <td class="rank-cell">2</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">MJ</div>
+                                    <div class="student-details">
+                                        <div class="student-name">Maya Johnson</div>
+                                        <div class="student-meta">
+                                            <span>maya.j@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Environmental Science</td>
+                            <td>4th Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 2,150</td>
+                        </tr>
+                        <tr class="top-3">
+                            <td class="rank-cell">3</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">RS</div>
+                                    <div class="student-details">
+                                        <div class="student-name">Ryan Smith</div>
+                                        <div class="student-meta">
+                                            <span>ryan.s@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Civil Engineering</td>
+                            <td>6th Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 1,980</td>
+                        </tr>
+                        <tr>
+                            <td class="rank-cell">4</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">SP</div>
+                                    <div class="student-details">
+                                        <div class="student-name">Sarah Patel</div>
+                                        <div class="student-meta">
+                                            <span>sarah.p@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Business Admin</td>
+                            <td>3rd Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 1,875</td>
+                        </tr>
+                        <tr>
+                            <td class="rank-cell">5</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">DL</div>
+                                    <div class="student-details">
+                                        <div class="student-name">David Lee</div>
+                                        <div class="student-meta">
+                                            <span>david.l@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Computer Science</td>
+                            <td>7th Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 1,780</td>
+                        </tr>
+                        <tr>
+                            <td class="rank-cell">6</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">EC</div>
+                                    <div class="student-details">
+                                        <div class="student-name">Emma Chen</div>
+                                        <div class="student-meta">
+                                            <span>emma.c@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Environmental Science</td>
+                            <td>5th Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 1,650</td>
+                        </tr>
+                        <tr>
+                            <td class="rank-cell">7</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">MW</div>
+                                    <div class="student-details">
+                                        <div class="student-name">Michael Wang</div>
+                                        <div class="student-meta">
+                                            <span>michael.w@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Electrical Eng</td>
+                            <td>4th Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 1,520</td>
+                        </tr>
+                        <tr>
+                            <td class="rank-cell">8</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">SG</div>
+                                    <div class="student-details">
+                                        <div class="student-name">Sophia Garcia</div>
+                                        <div class="student-meta">
+                                            <span>sophia.g@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Biology</td>
+                            <td>6th Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 1,480</td>
+                        </tr>
+                        <tr>
+                            <td class="rank-cell">9</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">JR</div>
+                                    <div class="student-details">
+                                        <div class="student-name">James Rodriguez</div>
+                                        <div class="student-meta">
+                                            <span>james.r@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Mechanical Eng</td>
+                            <td>5th Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 1,420</td>
+                        </tr>
+                        <tr>
+                            <td class="rank-cell">10</td>
+                            <td>
+                                <div class="student-info">
+                                    <div class="student-avatar">AK</div>
+                                    <div class="student-details">
+                                        <div class="student-name">Aisha Khan</div>
+                                        <div class="student-meta">
+                                            <span>aisha.k@campus.edu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>Business Admin</td>
+                            <td>4th Semester</td>
+                            <td class="points-cell"><i class="fas fa-leaf"></i> 1,380</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Green Point System &copy; 2023 | Fostering responsible citizenship through environmental action</p>
+        </footer>
+    </div>
+</body>
+</html>
